@@ -1,22 +1,16 @@
-class Level1Part1 extends Input{
-  Moves player;
+class Level2 extends Input{
   PImage background;
   PImage mDo, mDoHappy;
   PImage btn1Off, btn2Off, btn3Off, btn1On, btn2On, btn3On ;
-  PImage btn_map;
+  PImage btn_map_up, btn_map_down;
 
   int[] buttons = new int[3];
 
   float time = 0.0;
 
   boolean valido = false;
-  boolean starting = false;
-  boolean ending = false;
+  boolean primeira = false;
   boolean correct = false;
-
-  
-  float x2 = 0.0;       
-  float y2 = 0.0;
 
   AudioContext ac;
   // this will hold the path to our audio file
@@ -33,27 +27,24 @@ class Level1Part1 extends Input{
   Glide gainValue;
 
 
-  Level1Part1() {
-    delay(1000);
-    background = loadImage("tela1.png");
-    
-    player = new Moves(75, 77,2);
-    player.animations[0] = new Animation("dó",1,".png");
-    player.animations[1] = new Animation("sprite", 4, ".png");
-    //player
+  Level2() {
+    background = loadImage("bg/level2.png");
+    //monster
+    mDo = loadImage("dó0.png");
     mDoHappy = loadImage("dó2.png");
 
     //buttons
     randomPosition(buttons);
   
-    btn_map = loadImage("btn-map.png");
+    btn_map_up = loadImage("button/map-up.png");
+    btn_map_down = loadImage("button/map-down.png");
 
-    btn1Off = loadImage("btn1Off.png");
-    btn2Off = loadImage("btn2Off.png");
-    btn3Off = loadImage("btn3Off.png");
-    btn1On = loadImage("btn1On.png");
-    btn2On = loadImage("btn2On.png");
-    btn3On = loadImage("btn3On.png");
+    btn1Off = loadImage("button/btn1Off.png");
+    btn2Off = loadImage("button/btn2Off.png");
+    btn3Off = loadImage("button/btn3Off.png");
+    btn1On = loadImage("button/btn1On.png");
+    btn2On = loadImage("button/btn2On.png");
+    btn3On = loadImage("button/btn3On.png");
 
     //sound
     ac = new AudioContext(); 
@@ -85,32 +76,20 @@ class Level1Part1 extends Input{
   void show() {
     image(background, width/2, height/2);
     
-    if (mousePressed && !click) {
-      click = true;
-      x2 = mouseX;
-      y2 = mouseY;
-    }
-    if(click){
-      player.move(x2,y2,0.01);
-    }
-  
-  player.show();
-    
-    //button map
-    image(btn_map, 69, 502);
+    //buton map
+    image(btn_map_up, 69, 502);
   }
 
   void events() {
-    if (clickRadial(btn_map, 69, 502))
+    if (clickButton(btn_map_up, btn_map_down, 69, 502)){
+     //delay(400);
       PAGE = 3 ;
-      
-
+    }
     //monster interaction
-    if (mousePressed && mouseX>430 && mouseX<570 && mouseY>410 && mouseY<540) {
-      image(mDoHappy, width/2, 470);
+    if (mousePressed && mouseX>430 && mouseX<570 && mouseY>380 && mouseY<480) {
+      image(mDoHappy, width/2, 330);
     } else {
-      //image(mDo, width/2, 470);
-      player.animManager = 0;
+      image(mDo, width/2, 330);
     }
 
     if (correct) {

@@ -1,2 +1,0 @@
-# tonsParty-backup
-Project backup
